@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#./include "./include/select.h"
+#include "../include/select.h"
 
 /*
 ** ft_move_right(), permit to move cursor to the right

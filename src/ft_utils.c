@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#./include "./include/select.h"
+#include "../include/select.h"
 
 /*
 ** ft_exit(), permit to exit with message

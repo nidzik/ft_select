@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#./include "./include/select.h"
+#include "../include/select.h"
 
 void	ft_norme1(int curr_line, int save, int last_line, \
 				int nb_lines)

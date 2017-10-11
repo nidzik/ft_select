@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#./include "./include/select.h"
+#include "../include/select.h"
 
 /*
 ** select_static(),  init of struct select
