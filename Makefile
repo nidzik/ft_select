@@ -2,17 +2,27 @@
 NAME = ft_select
 
 # LIBFT
-LFTPATH = ./libft
-LFTFILE = $(LFTPATH)/libft.a
+LFTPATH = libft/
+LFTIPATH = -I $(LFTPATH)
+LFT = -L $(LFTPATH) -lft
+LFTCALL = all
+LFTCL = fclean
+
+#TERMCAPS
+TERM = -ltermcap
+
 
 OBJPATH = obj
 SRCPATH = src
+INCLUDE = -I ./include/
 
-INCLUDE = -I ./include
 
 CC = gcc
 BASEFLAGS = -Wall -Wextra -Wconversion
 CFLAGS = $(BASEFLAGS) -Werror -O2 -g
+
+LIBS = $(LFT) $(TERM)
+INCLUDES = $(INCLUDE) $(LFTIPATH)
 
 FILES = ft_main.c \
 		term_functions.c \
@@ -38,28 +48,36 @@ G = \033[0;32m
 # No color
 E = \033[39m
 
-all: libft $(NAME)
+all: l $(NAME)
 
 $(NAME): $(OBJECTS)
-	@echo "$(Y)[COMPILING FT_SELECT] $(G) $(CC) -o $@ $(CFLAGS) -g $(OBJECTS) $(INCLUDES) $(LFTFILE) $(E)"
-	@$(CC) -o $@ $(CFLAGS)  $(OBJECTS) $(INCLUDE) $(LFTFILE) -ltermcap
+	@echo "$(Y)[COMPILING FT_SELECT] $(G) $(CC) -o $@ $(CFLAGS) objs.o $(LIBS) $(E)"
+	@$(CC) -o $@ $(CFLAGS)  $(OBJECTS) $(INCLUDES) $(LIBS) 
 	@echo "$(Y)[COMPILING FT_SELECT DONE]$(E)"
 
 $(OBJECTS): $(OBJPATH)/%.o : $(SRCPATH)/%.c
 	@mkdir -p $(dir $@)
-	$(CC) -o $@ $(CFLAGS) $(INCLUDES) -c $<
+	$(CC) -o $@ $(CFLAGS) $(INCLUDES)  -c $<
 
 clean:
-	@echo "$(Y)[FT_SELECT]$(E)"
-	@echo "$(R)[REMOVE OBJ DIR]$(E)"
+	@echo "$(R)[REMOVE OBJ DIR]$(E)\n$(RM) $(OBJPATH)"
 	@$(RM) $(OBJPATH)
-	@cd $(LFTPATH) && $(MAKE) -s clean
+	@echo "$(G)[DONE.] $(E)"
 
 fclean: clean
+	@echo "$(R)[REMOVE FT_SELECT]$(E)\n$(RM) $(NAME)"
 	@$(RM) $(NAME)
-	@cd $(LFTPATH) && $(MAKE) -s fclean
+	@echo "$(G)[DONE.] $(E)"
+lfclean:
+	@echo "$(Y)[RM LIBFT] $(E)"
+	@make -C $(LFTPATH) $(LFTCL)
+	@echo "$(G)[DONE.] $(E)"
 
-libft:
-	@cd $(LFTPATH) && $(MAKE)
+cl: lfclean fclean
+
+l:
+	@echo "$(Y)[COMPILING LIBFT]\n$(G) make -C $(LFTPATH) $(LFTCALL) $(E)"
+	@make -C $(LFTPATH) $(LFTCALL)
+	@echo "$(Y)[COMPILING LIBFT DONE]$(E)"
 
 re: fclean all
